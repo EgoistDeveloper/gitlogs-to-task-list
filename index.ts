@@ -53,7 +53,10 @@ let alteredCommits = commits
     dateRaw: commit.authorDate,
     dateObject: momentJs(commit.authorDate),
   }))
-  .filter((commit: any) => commit.dateObject.isSame(today, "day"));
+  .filter(
+    (commit: any) =>
+      commit.dateObject.format("YYYY-MM-DD") === today.format("YYYY-MM-DD")
+  );
 
 // order by date
 alteredCommits?.sort((a: any, b: any) => a.dateOnject - b.dateOnject);
