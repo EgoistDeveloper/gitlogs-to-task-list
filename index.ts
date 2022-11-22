@@ -56,16 +56,16 @@ let alteredCommits = commits
   .filter((commit: any) => commit.dateObject.isSame(today, "day"));
 
 // order by date
-alteredCommits.sort((a: any, b: any) => a.dateOnject - b.dateOnject);
+alteredCommits?.sort((a: any, b: any) => a.dateOnject - b.dateOnject);
 
 // remove duplicates
-alteredCommits = alteredCommits.filter(
+alteredCommits = alteredCommits?.filter(
   (commit: any, index: number, self: any[]) =>
     index === self.findIndex((x: any) => x.message === commit.message)
 );
 
 // elapsed time
-alteredCommits = alteredCommits.map(
+alteredCommits = alteredCommits?.map(
   (commit: any, index: number, self: any[]) => {
     const nextCommit = self[index + 1],
       nextCommitDate = nextCommit?.dateObject,
@@ -108,14 +108,14 @@ alteredCommits = alteredCommits.map(
 );
 
 // remove less than 10 minute
-alteredCommits = alteredCommits.filter((commit: any) => {
+alteredCommits = alteredCommits?.filter((commit: any) => {
   const [hours, minutes] = commit.elapsedTime.split(":");
 
   return hours > 0 || minutes > configs.elapsedTimeMinimum;
 });
 
 // exclude commits
-alteredCommits = alteredCommits.filter(
+alteredCommits = alteredCommits?.filter(
   (commit: any) =>
     !configs.excludes.some((exclude: string) =>
       commit.message.startsWith(exclude)
@@ -123,9 +123,9 @@ alteredCommits = alteredCommits.filter(
 );
 
 if (!alteredCommits.length) {
-  console.log("❌ No commits found");
+  console.log("\n\n\n❌ No commits found\n\n\n");
 } else {
-  const logs = alteredCommits.map(
+  const logs = alteredCommits?.map(
     (commit: any) =>
       `- ${commit.message} [elapsed:${commit.elapsedTimeFinal}, date:${commit.dateRaw}]`
   );
